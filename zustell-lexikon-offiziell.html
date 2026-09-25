@@ -773,6 +773,7 @@
       <input type="text" id="searchInputLex" placeholder="Begriff oder Abkürzung eingeben …" aria-label="Begriff oder Abkürzung suchen" autocomplete="off">
       <button class="search-btn" onclick="doSearchLex()">Suchen →</button>
     </div>
+    <div class="autocomplete" id="autocompleteLex"></div>
   </div>
   <div class="term-list" id="termListAll"></div>
 </div>
@@ -1121,69 +1122,66 @@
     showView('result');
   }
 
-  // ---- Hero search + autocomplete ----
-  const input = document.getElementById('searchInput');
-  const autocompleteBox = document.getElementById('autocomplete');
-  let activeIndex = -1;
-  let currentMatches = [];
+  // ---- Suche mit Autocomplete (Startseite + Lexikon-Seite, identisches Verhalten) ----
+  function setupSearch(input, autocompleteBox) {
+    let activeIndex = -1;
+    let currentMatches = [];
 
-  function doSearch() {
-    const q = input.value.trim();
-    if (!q) return;
-    closeAutocomplete();
-    showEntry(q);
-  }
-
-  input.addEventListener('input', () => {
-    const q = normalize(input.value);
-    if (!q) { closeAutocomplete(); return; }
-    const matches = lexikon.filter(e => normalize(e.begriff).startsWith(q) || normalize(e.bedeutung).startsWith(q));
-    currentMatches = matches;
-    activeIndex = -1;
-    if (matches.length) renderAutocomplete(matches, input.value);
-    else closeAutocomplete();
-  });
-
-  input.addEventListener('keydown', (e) => {
-    if (autocompleteBox.classList.contains('open') && currentMatches.length) {
-      if (e.key === 'ArrowDown') { e.preventDefault(); activeIndex = (activeIndex+1) % currentMatches.length; renderAutocomplete(currentMatches, input.value); return; }
-      if (e.key === 'ArrowUp') { e.preventDefault(); activeIndex = (activeIndex-1+currentMatches.length) % currentMatches.length; renderAutocomplete(currentMatches, input.value); return; }
-      if (e.key === 'Enter' && activeIndex >= 0) { e.preventDefault(); input.value = currentMatches[activeIndex].begriff; closeAutocomplete(); doSearch(); return; }
+    function doSearch() {
+      const q = input.value.trim();
+      if (!q) return;
+      closeAutocomplete();
+      showEntry(q);
     }
-    if (e.key === 'Enter') { closeAutocomplete(); doSearch(); }
-    if (e.key === 'Escape') closeAutocomplete();
-  });
 
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-row') && !e.target.closest('.autocomplete')) closeAutocomplete();
-  });
+    function renderAutocomplete(matches, query) {
+      const qLen = query.trim().length;
+      autocompleteBox.innerHTML = matches.map((m, i) => `
+        <div class="option ${i === activeIndex ? 'active' : ''}" data-term="${m.begriff}">
+          <span class="abk"><mark>${m.begriff.slice(0,qLen)}</mark>${m.begriff.slice(qLen)}</span>
+          <span class="bed">${m.bedeutung}</span>
+        </div>`).join('');
+      autocompleteBox.classList.add('open');
+      autocompleteBox.querySelectorAll('.option').forEach(el => {
+        el.addEventListener('click', () => { input.value = el.dataset.term; closeAutocomplete(); doSearch(); });
+      });
+    }
 
-  function renderAutocomplete(matches, query) {
-    const qLen = query.trim().length;
-    autocompleteBox.innerHTML = matches.map((m, i) => `
-      <div class="option ${i === activeIndex ? 'active' : ''}" data-term="${m.begriff}">
-        <span class="abk"><mark>${m.begriff.slice(0,qLen)}</mark>${m.begriff.slice(qLen)}</span>
-        <span class="bed">${m.bedeutung}</span>
-      </div>`).join('');
-    autocompleteBox.classList.add('open');
-    autocompleteBox.querySelectorAll('.option').forEach(el => {
-      el.addEventListener('click', () => { input.value = el.dataset.term; closeAutocomplete(); doSearch(); });
+    function closeAutocomplete() {
+      autocompleteBox.classList.remove('open');
+      autocompleteBox.innerHTML = '';
+      currentMatches = []; activeIndex = -1;
+    }
+
+    input.addEventListener('input', () => {
+      const q = normalize(input.value);
+      if (!q) { closeAutocomplete(); return; }
+      const matches = lexikon.filter(e => normalize(e.begriff).startsWith(q) || normalize(e.bedeutung).startsWith(q));
+      currentMatches = matches;
+      activeIndex = -1;
+      if (matches.length) renderAutocomplete(matches, input.value);
+      else closeAutocomplete();
     });
-  }
-  function closeAutocomplete() {
-    autocompleteBox.classList.remove('open');
-    autocompleteBox.innerHTML = '';
-    currentMatches = []; activeIndex = -1;
+
+    input.addEventListener('keydown', (e) => {
+      if (autocompleteBox.classList.contains('open') && currentMatches.length) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); activeIndex = (activeIndex+1) % currentMatches.length; renderAutocomplete(currentMatches, input.value); return; }
+        if (e.key === 'ArrowUp') { e.preventDefault(); activeIndex = (activeIndex-1+currentMatches.length) % currentMatches.length; renderAutocomplete(currentMatches, input.value); return; }
+        if (e.key === 'Enter' && activeIndex >= 0) { e.preventDefault(); input.value = currentMatches[activeIndex].begriff; closeAutocomplete(); doSearch(); return; }
+      }
+      if (e.key === 'Enter') { closeAutocomplete(); doSearch(); }
+      if (e.key === 'Escape') closeAutocomplete();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-row') && !e.target.closest('.autocomplete')) closeAutocomplete();
+    });
+
+    return doSearch;
   }
 
-  // ---- Lexikon-Seiten Suche ----
-  const inputLex = document.getElementById('searchInputLex');
-  function doSearchLex() {
-    const q = inputLex.value.trim();
-    if (!q) return;
-    showEntry(q);
-  }
-  inputLex.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearchLex(); });
+  const doSearch = setupSearch(document.getElementById('searchInput'), document.getElementById('autocomplete'));
+  const doSearchLex = setupSearch(document.getElementById('searchInputLex'), document.getElementById('autocompleteLex'));
 </script>
 
 </body>
