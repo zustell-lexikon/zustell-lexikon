@@ -404,13 +404,7 @@
     padding: 60px 28px 46px;
     overflow: hidden;
   }
-  .footer-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-  .footer-qr {
-    background: #fff; padding: 10px; border-radius: 12px; box-shadow: var(--shadow-md);
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-  }
-  .footer-qr img { width: 96px; height: 96px; display: block; }
-  .footer-qr span { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .footer-inner { max-width: 1180px; margin: 0 auto; position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: flex-start; gap: 24px; flex-wrap: wrap; }
   .footer-claim {
     font-family: Georgia, 'Times New Roman', serif;
     font-style: italic;
@@ -857,10 +851,6 @@
       <div>
         <p class="footer-claim">Gemeinsam.<br>Für eine starke Zustellung.</p>
         <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
-      </div>
-      <div class="footer-qr">
-        <img src="data:image/png;base64,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" alt="QR-Code zur Zustell-Lexikon Webseite">
-        <span>Live ansehen</span>
       </div>
     </div>
   </footer>

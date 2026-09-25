@@ -166,7 +166,7 @@ Es gibt aktuell **keinen Ordner für Bilder** — alle Bilder (Favicon, Hintergr
 
 Reihenfolge = empfohlene Bearbeitungsreihenfolge:
 
-1. [ ] **QR-Code im Footer korrigieren** — zeigt aktuell noch auf die alte private Claude-Artifact-URL statt auf `https://zustell-lexikon.github.io`. Neuen QR-Code generieren (z. B. mit der Python-`qrcode`-Bibliothek) und als Base64-PNG im Footer ersetzen.
+1. [x] **QR-Code aus dem Footer entfernt** — zeigte auf die alte private Claude-Artifact-URL statt auf die Live-Seite. Statt die URL zu korrigieren, wurde der QR-Code auf Wunsch ganz entfernt (Footer zeigt jetzt nur noch Claim + Copyright). Der zugehörige, jetzt ungenutzte `.footer-qr`-CSS-Block wurde ebenfalls entfernt.
 2. [ ] **Echten Lexikon-Inhalt einpflegen** — Begriffe aus den drei geplanten Fachbereichs-Gesprächen (Support, Logistik, System) sammeln und ins `lexikon`-Array im `<script>` eintragen. Kategorie „System" ist komplett leer und braucht als Erstes Inhalt.
 3. [ ] **Bildrechte/Datenschutz für neue Fotos prüfen**, sobald weitere Bilder hinzukommen (keine erkennbaren, nicht einwilligenden Personen; keine Post-Logos in eigenen Fotos, falls das markenrechtlich relevant ist — im Zweifel bei der Ausbildnerin nachfragen).
 4. [ ] **Totes/unbenutztes CSS aufräumen** (niedrige Priorität): `.brand`, `.brand .mark`, `.hero-photo`, `.hero-shape`, `.hero-illustration` sind definiert, werden aber nicht mehr sichtbar verwendet — könnten entfernt werden, sobald das Design final steht.
@@ -177,7 +177,6 @@ Reihenfolge = empfohlene Bearbeitungsreihenfolge:
 
 ## Bekannte Probleme
 
-- **QR-Code zeigt auf falsche URL** (siehe Offene Aufgaben, Punkt 1) — zeigt auf `https://claude.ai/artifact/4G1MrtN62KmFLRy8pDT1Pk` statt auf die Live-Seite.
 - **Kategorie „System" ist leer** — es gibt aktuell keinen einzigen Lexikon-Eintrag mit `kategorie: "system"`. Die entsprechende Kategorie-Kachel/-Seite existiert im UI, zeigt aber „keine Einträge".
 - **`zustell-lexikon.html` ist veraltet** — nicht versehentlich als aktuelle Datei verwenden.
 - **Kein automatisches Deployment** — jede Änderung muss manuell in GitHub hochgeladen und die Datei erneut in `index.html` umbenannt werden (leicht fehleranfällig, siehe frühere Verwechslung mit `zustell-lexikon-offiziell (42).html`).
@@ -218,7 +217,7 @@ Diese Punkte konnten aus dem bisherigen Gespräch nicht abschliessend geklärt w
 
 1. Ist eine **echte Versionsverwaltung mit Git** gewünscht (Repository lokal mit `git init`, Commits statt manuellem Datei-Upload auf GitHub)? Das würde das manuelle Umbenennen zu `index.html` überflüssig machen und Änderungen nachvollziehbar machen.
 2. Sind für die Kategorie „System" bereits Begriffe/Notizen aus einem Fachgespräch vorhanden, die nur noch nicht eingetragen wurden, oder muss das Gespräch mit dem Fachbereich erst noch stattfinden?
-3. Soll der QR-Code sofort auf die Live-URL korrigiert werden, oder soll das bewusst bis zum Schluss (zusammen mit dem Inhalt) liegen bleiben?
+3. ~~Soll der QR-Code sofort auf die Live-URL korrigiert werden, oder soll das bewusst bis zum Schluss liegen bleiben?~~ **Geklärt:** Der Nutzer hat entschieden, den QR-Code stattdessen ganz zu entfernen (siehe „Offene Aufgaben" Punkt 1).
 4. Gibt es eine Vorgabe der Post/des Lehrbetriebs, ob ein öffentlich zugängliches GitHub-Pages-Repository überhaupt zulässig ist, oder muss letztlich doch eine interne/zugriffsbeschränkte Lösung (z. B. via Post-internem Hosting) gefunden werden? Das wurde im Gespräch als Wunsch geäussert, aber mit den Grenzen des kostenlosen GitHub-Tiers nicht vollständig gelöst.
 5. Ist die Verwendung des Luftaufnahme-Fotos vom Paketzentrum Härkingen (Nutzer-eigenes Foto) intern bei der Post freigegeben/abgeklärt, oder muss das noch offiziell bestätigt werden (relevant für Beurteilungskriterium 8)?
 6. Soll `zustell-lexikon.html` (die alte, überholte Version) gelöscht oder archiviert werden, oder bewusst als Verlaufs-Nachweis aufbewahrt bleiben?
