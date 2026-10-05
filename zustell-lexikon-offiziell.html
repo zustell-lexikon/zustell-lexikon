@@ -566,22 +566,18 @@
   .entry .field-label { font-size: 11.5px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 20px 0 6px; }
   .entry .field-label:first-of-type { margin-top: 0; }
   .entry p.body { margin: 0; font-size: 16px; }
-  .entry p.body.drop::first-letter { font-family: var(--font-head); font-size: 42px; font-weight: 600; float: left; line-height: 0.8; margin: 6px 6px 0 0; color: var(--ink); }
   .entry .example { position: relative; background: var(--yellow-soft); border-left: 3px solid var(--yellow-deep); padding: 14px 18px 14px 42px; font-size: 15px; border-radius: 0 3px 3px 0; }
   .entry .example::before {
     content: "“"; position: absolute; left: 12px; top: 2px;
     font-family: var(--font-head); font-size: 34px; font-weight: 600; color: var(--yellow-deep); line-height: 1;
   }
   .entry.logistik { background: #fffaf0; border-top-color: #e0ad00; }
-  .entry.logistik p.body.drop::first-letter { color: #a3790a; }
   .entry.logistik .example { background: #fff1cc; border-left-color: #e0ad00; }
   .entry.logistik .example::before { color: #c99a00; }
   .entry.system { background: #f1f7fd; border-top-color: #1f4e79; }
-  .entry.system p.body.drop::first-letter { color: #1f4e79; }
   .entry.system .example { background: #e4eefb; border-left-color: #1f4e79; }
   .entry.system .example::before { color: #3b729e; }
   .entry.support { background: #f5f3fd; border-top-color: #4a3b8a; }
-  .entry.support p.body.drop::first-letter { color: #4a3b8a; }
   .entry.support .example { background: #eae7fb; border-left-color: #4a3b8a; }
   .entry.support .example::before { color: #6552ae; }
   .not-found { max-width: 780px; margin: 0 auto; padding: 40px 28px 8px; color: var(--muted); }
@@ -1201,7 +1197,7 @@
           <p class="full">${e.bedeutung}</p>
           <hr class="rule">
           <p class="field-label">Erklärung</p>
-          <p class="body drop">${e.erklaerung}</p>
+          <p class="body">${e.erklaerung}</p>
           <p class="field-label">Beispiel aus dem Arbeitsalltag</p>
           <p class="body example">${e.beispiel}</p>
         </div>
