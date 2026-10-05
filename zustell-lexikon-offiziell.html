@@ -572,6 +572,18 @@
     content: "“"; position: absolute; left: 12px; top: 2px;
     font-family: var(--font-head); font-size: 34px; font-weight: 600; color: var(--yellow-deep); line-height: 1;
   }
+  .entry.logistik { background: #fffaf0; border-top-color: #e0ad00; }
+  .entry.logistik p.body.drop::first-letter { color: #a3790a; }
+  .entry.logistik .example { background: #fff1cc; border-left-color: #e0ad00; }
+  .entry.logistik .example::before { color: #c99a00; }
+  .entry.system { background: #f1f7fd; border-top-color: #1f4e79; }
+  .entry.system p.body.drop::first-letter { color: #1f4e79; }
+  .entry.system .example { background: #e4eefb; border-left-color: #1f4e79; }
+  .entry.system .example::before { color: #3b729e; }
+  .entry.support { background: #f5f3fd; border-top-color: #4a3b8a; }
+  .entry.support p.body.drop::first-letter { color: #4a3b8a; }
+  .entry.support .example { background: #eae7fb; border-left-color: #4a3b8a; }
+  .entry.support .example::before { color: #6552ae; }
   .not-found { max-width: 780px; margin: 0 auto; padding: 40px 28px 8px; color: var(--muted); }
   .not-found-hint { max-width: 780px; margin: 8px auto 0; padding: 0 28px 70px; color: var(--muted); font-size: 14.5px; }
 
@@ -1181,7 +1193,7 @@
     const catNames = { logistik: 'Logistik', system: 'System', support: 'Support' };
     return `
       <div class="entry-wrap">
-        <div class="entry">
+        <div class="entry ${e.kategorie}">
           <div class="entry-head">
             <p class="term">${e.begriff}</p>
             <span class="cat-label ${e.kategorie}">${catNames[e.kategorie] || e.kategorie}</span>
