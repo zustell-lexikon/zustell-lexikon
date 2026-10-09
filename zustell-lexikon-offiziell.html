@@ -151,16 +151,6 @@
     color: var(--ink);
     font-weight: 600;
   }
-  .nav-tagline {
-    background: var(--yellow-soft);
-    color: var(--yellow-deep);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 6px 12px;
-    border-radius: 999px;
-  }
   .nav-search-icon {
     width: 34px; height: 34px;
     border-radius: 50%;
@@ -202,7 +192,6 @@
       box-shadow: none !important;
     }
     .nav-links a:last-child { border-bottom: none; }
-    .nav-tagline { display: none; }
   }
   @media (max-width: 480px) {
     .search-row { flex-wrap: wrap; border-radius: 20px; padding: 14px; gap: 10px; }
@@ -622,7 +611,7 @@
   @media print {
     .nav, .hero-bg, .site-bg, .site-bg-tint,
     .autocomplete, .search-btn, footer.site-footer, .back-link,
-    .nav-search-icon, .nav-tagline { display: none !important; }
+    .nav-search-icon { display: none !important; }
     body { background: #fff !important; }
     .entry, .card, .term-chip { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
     a { color: inherit !important; text-decoration: none !important; }
@@ -674,7 +663,6 @@
       <button class="nav-search-icon" data-nav="lexikon" title="Suche öffnen">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#1a1a18" stroke-width="2"/><line x1="16.5" y1="16.5" x2="21" y2="21" stroke="#1a1a18" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
-      <span class="nav-tagline">Intern für Mitarbeitende</span>
       <button class="nav-burger" id="navBurger" aria-label="Menü öffnen" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="6" x2="21" y2="6" stroke="#1a1a18" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="12" x2="21" y2="12" stroke="#1a1a18" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="18" x2="21" y2="18" stroke="#1a1a18" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
