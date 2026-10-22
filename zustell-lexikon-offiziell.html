@@ -602,9 +602,68 @@
     background-position: center center;
   }
   .view.active { display: block; }
+  /* ---------- Übersetzer (schwebendes Symbol + Fenster) ---------- */
+  .translate-fab {
+    position: fixed; right: 20px; bottom: 20px; z-index: 600;
+    width: 54px; height: 54px; border-radius: 50%;
+    background: var(--yellow);
+    border: none; box-shadow: var(--shadow-md);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .translate-fab:hover { background: var(--yellow-deep); }
+  .translate-fab svg { width: 24px; height: 24px; }
+  .translate-panel {
+    position: fixed; right: 20px; bottom: 86px; z-index: 600;
+    width: 320px; max-width: calc(100vw - 32px);
+    background: var(--panel); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md); border: 1px solid var(--line);
+    padding: 18px;
+    display: none;
+    transform-origin: bottom right;
+  }
+  .translate-panel.open { display: block; animation: translateOpen 0.2s ease; }
+  @keyframes translateOpen {
+    from { opacity: 0; transform: scale(0.95) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .translate-panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .translate-panel-head h4 { margin: 0; font-family: var(--font-head); font-size: 16px; font-weight: 600; }
+  .translate-close { border: none; background: none; cursor: pointer; font-size: 18px; line-height: 1; color: var(--muted); padding: 4px; }
+  .translate-close:hover { color: var(--ink); }
+  .translate-panel textarea {
+    width: 100%; min-height: 70px; resize: vertical;
+    border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 10px 12px; font-family: var(--font-body); font-size: 14px;
+    margin-bottom: 10px; box-sizing: border-box;
+  }
+  .translate-panel select {
+    width: 100%; border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 9px 10px; font-family: var(--font-body); font-size: 13.5px;
+    margin-bottom: 10px; background: var(--paper); color: var(--ink);
+  }
+  .translate-go {
+    width: 100%; border: none; border-radius: 999px;
+    background: var(--yellow); color: var(--ink);
+    font-family: var(--font-body); font-size: 14px; font-weight: 700;
+    padding: 11px; cursor: pointer; margin-bottom: 10px;
+  }
+  .translate-go:hover { background: var(--yellow-deep); }
+  .translate-result {
+    background: var(--yellow-soft); border-radius: var(--radius-sm);
+    padding: 10px 12px; font-size: 14px; min-height: 20px;
+    white-space: pre-wrap;
+  }
+  .translate-result.empty { display: none; }
+  .translate-hint { font-size: 11.5px; color: var(--muted); margin-top: 8px; }
+  @media (max-width: 480px) {
+    .translate-fab { right: 14px; bottom: 14px; }
+    .translate-panel { right: 14px; bottom: 78px; width: calc(100vw - 28px); }
+  }
+
   @media print {
     .nav, .hero-bg, .site-bg, .site-bg-tint,
-    .autocomplete, .search-btn, footer.site-footer, .back-link { display: none !important; }
+    .autocomplete, .search-btn, footer.site-footer, .back-link, .translate-fab, .translate-panel { display: none !important; }
     body { background: #fff !important; }
     .entry, .card, .term-chip { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
     a { color: inherit !important; text-decoration: none !important; }
@@ -1007,6 +1066,46 @@
   </footer>
 </div>
 
+<!-- ============ Übersetzer (schwebendes Symbol) ============ -->
+<button class="translate-fab" id="translateFab" aria-haspopup="true" aria-expanded="false" aria-label="Übersetzer öffnen">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <text x="1.5" y="11" font-size="10" font-weight="700" fill="#1a1a18" font-family="Arial, sans-serif">文</text>
+    <text x="11" y="21" font-size="11" font-weight="700" fill="#1a1a18" font-family="Arial, sans-serif">A</text>
+  </svg>
+</button>
+<div class="translate-panel" id="translatePanel" role="dialog" aria-label="Übersetzer">
+  <div class="translate-panel-head">
+    <h4>Übersetzer</h4>
+    <button class="translate-close" id="translateClose" aria-label="Schliessen">✕</button>
+  </div>
+  <textarea id="translateInput" placeholder="Wort oder Satz eingeben …" aria-label="Zu übersetzender Text"></textarea>
+  <select id="translateTarget" aria-label="Zielsprache">
+    <option value="de">Deutsch</option>
+    <option value="fr">Französisch</option>
+    <option value="it">Italienisch</option>
+    <option value="en">Englisch</option>
+    <option value="pt">Portugiesisch</option>
+    <option value="es">Spanisch</option>
+    <option value="sq">Albanisch</option>
+    <option value="sr">Serbisch</option>
+    <option value="hr">Kroatisch</option>
+    <option value="bs">Bosnisch</option>
+    <option value="mk">Nordmazedonisch</option>
+    <option value="tr">Türkisch</option>
+    <option value="ta">Tamilisch</option>
+    <option value="ar">Arabisch</option>
+    <option value="pl">Polnisch</option>
+    <option value="ro">Rumänisch</option>
+    <option value="ru">Russisch</option>
+    <option value="uk">Ukrainisch</option>
+    <option value="ti">Tigrinya</option>
+    <option value="fa">Persisch / Dari</option>
+  </select>
+  <button class="translate-go" id="translateGo">Übersetzen</button>
+  <div class="translate-result empty" id="translateResult"></div>
+  <p class="translate-hint">Automatische Übersetzung, erkennt die Ausgangssprache selbst.</p>
+</div>
+
 <script>
   // ---- Begriffsdatenbank (Platzhalter – wird mit echten Begriffen aus den Meetings ergänzt) ----
   const lexikon = [
@@ -1154,6 +1253,54 @@
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showView(el.dataset.nav); }
       });
     }
+  });
+
+  // Übersetzer (schwebendes Fenster)
+  const translateFab = document.getElementById('translateFab');
+  const translatePanel = document.getElementById('translatePanel');
+  const translateClose = document.getElementById('translateClose');
+  const translateInput = document.getElementById('translateInput');
+  const translateTarget = document.getElementById('translateTarget');
+  const translateGo = document.getElementById('translateGo');
+  const translateResult = document.getElementById('translateResult');
+
+  function toggleTranslatePanel(open) {
+    const isOpen = open !== undefined ? open : !translatePanel.classList.contains('open');
+    translatePanel.classList.toggle('open', isOpen);
+    translateFab.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) translateInput.focus();
+  }
+  translateFab.addEventListener('click', () => toggleTranslatePanel());
+  translateClose.addEventListener('click', () => toggleTranslatePanel(false));
+  document.addEventListener('click', (e) => {
+    if (translatePanel.classList.contains('open') && !e.target.closest('.translate-panel') && !e.target.closest('.translate-fab')) {
+      toggleTranslatePanel(false);
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggleTranslatePanel(false);
+  });
+
+  async function runTranslate() {
+    const text = translateInput.value.trim();
+    if (!text) return;
+    translateResult.classList.remove('empty');
+    translateResult.textContent = 'Übersetze …';
+    const target = translateTarget.value;
+    try {
+      const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=' + target + '&dt=t&q=' + encodeURIComponent(text);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Netzwerkfehler');
+      const data = await res.json();
+      const translated = data[0].map(part => part[0]).join('');
+      translateResult.textContent = translated;
+    } catch (err) {
+      translateResult.textContent = 'Übersetzung momentan nicht möglich. Bitte später erneut versuchen.';
+    }
+  }
+  translateGo.addEventListener('click', runTranslate);
+  translateInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runTranslate(); }
   });
 
   // Mobile Hamburger-Menü
