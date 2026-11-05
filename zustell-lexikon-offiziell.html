@@ -184,6 +184,7 @@
       box-shadow: none !important;
     }
     .nav-links a:last-child { border-bottom: none; }
+    .hero-inner { padding-top: 84px !important; }
   }
   @media (max-width: 480px) {
     .search-row { flex-wrap: wrap; border-radius: 20px; padding: 14px; gap: 10px; }
@@ -612,6 +613,12 @@
   }
   .translate-fab:hover { background: var(--yellow-deep); }
   .translate-fab svg { width: 24px; height: 24px; }
+  .translate-backdrop {
+    position: fixed; inset: 0; z-index: 590;
+    background: rgba(28, 31, 34, 0.28);
+    display: none;
+  }
+  .translate-backdrop.open { display: block; }
   .translate-panel {
     position: fixed; right: 20px; bottom: 86px; z-index: 600;
     width: 340px; max-width: calc(100vw - 32px);
@@ -637,10 +644,16 @@
   }
   .translate-field select {
     width: 100%; border: 1px solid var(--line); border-radius: var(--radius-sm);
-    padding: 8px 10px; font-family: var(--font-body); font-size: 13px;
-    margin-bottom: 6px; background: var(--grey-bg); color: var(--ink);
-    box-sizing: border-box;
+    padding: 8px 32px 8px 10px; font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    margin-bottom: 6px; background-color: var(--grey-bg); color: var(--ink);
+    box-sizing: border-box; cursor: pointer;
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231c1f22' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 8px center; background-size: 16px;
+    transition: border-color 0.15s ease;
   }
+  .translate-field select:hover { border-color: var(--yellow-deep); }
+  .translate-field select:focus { outline: none; border-color: var(--yellow-deep); box-shadow: 0 0 0 2px var(--yellow-soft); }
   .translate-field textarea {
     width: 100%; min-height: 64px; resize: vertical;
     border: 1px solid var(--line); border-radius: var(--radius-sm);
@@ -666,7 +679,7 @@
 
   @media print {
     .nav, .hero-bg, .site-bg, .site-bg-tint,
-    .autocomplete, .search-btn, footer.site-footer, .back-link, .translate-fab, .translate-panel { display: none !important; }
+    .autocomplete, .search-btn, footer.site-footer, .back-link, .translate-fab, .translate-panel, .translate-backdrop { display: none !important; }
     body { background: #fff !important; }
     .entry, .card, .term-chip { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
     a { color: inherit !important; text-decoration: none !important; }
@@ -813,7 +826,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -846,7 +859,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -895,7 +908,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -941,7 +954,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -965,7 +978,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -987,7 +1000,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -1009,7 +1022,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -1044,7 +1057,7 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
@@ -1063,13 +1076,14 @@
     <div class="footer-inner">
       <div>
         <p class="footer-claim">summend statt brummend.</p>
-        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo</p>
+        <p class="footer-copy">© 2026 · Zustell&#8209;Lexikon · Valentino Cioffo · Stand: November 2026</p>
       </div>
     </div>
   </footer>
 </div>
 
 <!-- ============ Übersetzer (schwebendes Symbol) ============ -->
+<div class="translate-backdrop" id="translateBackdrop"></div>
 <button class="translate-fab" id="translateFab" aria-haspopup="true" aria-expanded="false" aria-label="Übersetzer öffnen">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <text x="1.5" y="11" font-size="10" font-weight="700" fill="#1a1a18" font-family="Arial, sans-serif">文</text>
@@ -1291,6 +1305,7 @@
   // Übersetzer (schwebendes Fenster)
   const translateFab = document.getElementById('translateFab');
   const translatePanel = document.getElementById('translatePanel');
+  const translateBackdrop = document.getElementById('translateBackdrop');
   const translateClose = document.getElementById('translateClose');
   const translateInput = document.getElementById('translateInput');
   const translateSource = document.getElementById('translateSource');
@@ -1301,16 +1316,13 @@
   function toggleTranslatePanel(open) {
     const isOpen = open !== undefined ? open : !translatePanel.classList.contains('open');
     translatePanel.classList.toggle('open', isOpen);
+    translateBackdrop.classList.toggle('open', isOpen);
     translateFab.setAttribute('aria-expanded', String(isOpen));
     if (isOpen) translateInput.focus();
   }
   translateFab.addEventListener('click', () => toggleTranslatePanel());
   translateClose.addEventListener('click', () => toggleTranslatePanel(false));
-  document.addEventListener('click', (e) => {
-    if (translatePanel.classList.contains('open') && !e.target.closest('.translate-panel') && !e.target.closest('.translate-fab')) {
-      toggleTranslatePanel(false);
-    }
-  });
+  translateBackdrop.addEventListener('click', () => toggleTranslatePanel(false));
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') toggleTranslatePanel(false);
   });
